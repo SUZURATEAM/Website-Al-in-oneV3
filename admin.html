@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — RiyoChat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="toast-stack" id="toast-stack"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    RiyoChat <small>admin</small>
+  </div>
+  <div class="topbar-right">
+    <a href="index.html" class="btn btn-ghost btn-sm">← Kembali ke situs</a>
+  </div>
+</header>
+
+<!-- Login -->
+<div class="admin-login" id="admin-login">
+  <h2>Masuk Admin</h2>
+  <div class="field" style="margin-bottom:14px;">
+    <label for="admin-token">Admin Token</label>
+    <input type="password" id="admin-token" placeholder="Masukkan token admin" style="width:100%;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:8px;" />
+  </div>
+  <button class="btn btn-primary btn-block" id="login-btn">Masuk</button>
+  <p id="login-error" style="color:#f0a5a5;font-size:13px;margin-top:12px;display:none;">Token salah. Coba lagi.</p>
+</div>
+
+<!-- Dashboard -->
+<main class="admin-wrap" id="admin-dashboard" style="display:none;">
+
+  <div class="admin-grid">
+    <div class="admin-card">
+      <div class="label">User Online</div>
+      <div class="value" id="stat-online">0</div>
+    </div>
+    <div class="admin-card">
+      <div class="label">Room Aktif</div>
+      <div class="value" id="stat-rooms">0</div>
+    </div>
+    <div class="admin-card">
+      <div class="label">Match Hari Ini</div>
+      <div class="value" id="stat-matches">0</div>
+    </div>
+    <div class="admin-card">
+      <div class="label">Laporan Hari Ini</div>
+      <div class="value" id="stat-reports">0</div>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h3>📢 Broadcast Pengumuman</h3>
+    <form class="admin-broadcast-form" id="broadcast-form">
+      <input type="text" id="broadcast-message" placeholder="Tulis pengumuman untuk semua pengguna online…" maxlength="500" />
+      <button type="submit" class="btn btn-primary">Kirim</button>
+    </form>
+  </div>
+
+  <div class="admin-section">
+    <h3>🚫 Ban Pengguna</h3>
+    <form class="admin-broadcast-form" id="ban-form">
+      <input type="text" id="ban-identifier" placeholder="Guest ID atau identifier user…" />
+      <input type="text" id="ban-reason" placeholder="Alasan (opsional)…" style="max-width:220px;" />
+      <button type="submit" class="btn btn-danger">Ban</button>
+    </form>
+  </div>
+
+  <div class="admin-section">
+    <h3>🚩 Laporan Masuk</h3>
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Pelapor</th>
+            <th>Dilaporkan</th>
+            <th>Alasan</th>
+            <th>Catatan</th>
+          </tr>
+        </thead>
+        <tbody id="reports-body">
+          <tr><td colspan="5" style="color:var(--text-dim);">Memuat laporan…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>

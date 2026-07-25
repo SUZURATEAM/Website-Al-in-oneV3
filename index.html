@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>RiyoChat — Ngobrol Anonim, Real-Time</title>
+<meta name="description" content="RiyoChat: temukan teman ngobrol baru secara anonim dan real-time, tanpa perlu akun." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loading-node"></div>
+  <div class="loading-label">Menghubungkan ke RiyoChat…</div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    RiyoChat <small>beta</small>
+  </div>
+  <div class="topbar-right">
+    <button class="btn btn-ghost btn-sm" id="how-to-btn">Cara Menggunakan</button>
+  </div>
+</header>
+
+<main class="home-wrap">
+
+  <div class="radar" aria-hidden="true">
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-core">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
+      </svg>
+    </div>
+  </div>
+
+  <h1>Ngobrol dengan orang asing, tanpa basa-basi.</h1>
+  <p class="subtitle">Tanpa akun, tanpa data pribadi. Cukup tekan satu tombol dan RiyoChat akan mencarikan teman ngobrol untukmu secara real-time.</p>
+
+  <form class="home-form" id="search-form">
+    <div class="field">
+      <label for="nickname">Nama panggilan <span style="opacity:.6">(opsional)</span></label>
+      <input type="text" id="nickname" maxlength="20" placeholder="Contoh: Riyo, Anon, Kucing..." autocomplete="off" />
+    </div>
+
+    <button type="button" class="advanced-toggle" id="advanced-toggle">
+      <span id="advanced-arrow">▸</span> Filter pencarian & minat (opsional)
+    </button>
+
+    <div class="advanced-panel" id="advanced-panel">
+      <div class="field-row">
+        <div class="field">
+          <label for="age">Umur</label>
+          <input type="number" id="age" min="10" max="99" placeholder="—" />
+        </div>
+        <div class="field">
+          <label for="gender">Gender kamu</label>
+          <select id="gender">
+            <option value="">— Tidak diisi —</option>
+            <option value="male">Cowok</option>
+            <option value="female">Cewek</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Cari teman ngobrol</label>
+        <div class="chip-group" id="filter-gender-group">
+          <button type="button" class="chip active" data-value="any">Siapa saja</button>
+          <button type="button" class="chip" data-value="male">Cowok</button>
+          <button type="button" class="chip" data-value="female">Cewek</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Minat</label>
+        <div class="chip-group" id="interests-group">
+          <button type="button" class="chip" data-value="game">🎮 Game</button>
+          <button type="button" class="chip" data-value="musik">🎵 Musik</button>
+          <button type="button" class="chip" data-value="anime">🌸 Anime</button>
+          <button type="button" class="chip" data-value="film">🎬 Film</button>
+          <button type="button" class="chip" data-value="teknologi">💻 Teknologi</button>
+          <button type="button" class="chip" data-value="olahraga">⚽ Olahraga</button>
+          <button type="button" class="chip" data-value="lainnya">✨ Lainnya</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" id="find-btn">
+      Cari Teman
+    </button>
+  </form>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-dot"></span>
+      <strong id="online-count">0</strong>&nbsp;online
+    </div>
+    <div class="stat-item">
+      <span class="stat-dot" style="animation-delay:1s"></span>
+      <strong id="searching-count">0</strong>&nbsp;sedang mencari
+    </div>
+  </div>
+
+</main>
+
+<!-- Modal: Cara Menggunakan -->
+<div class="modal-overlay" id="how-to-modal">
+  <div class="modal">
+    <h2>Cara pakai RiyoChat</h2>
+    <ol>
+      <li><strong>Isi nama panggilan</strong> (boleh dikosongkan, nanti kamu dapat ID acak seperti <code>Guest#58291</code>).</li>
+      <li>Atur <strong>filter</strong> kalau mau cari lawan bicara tertentu atau minat yang sama — opsional.</li>
+      <li>Tekan <strong>Cari Teman</strong>, tunggu sebentar sampai bot menemukan pasangan chat.</li>
+      <li>Ngobrol bebas. Kalau bosan, tekan <strong>Skip</strong> untuk cari partner baru, atau <strong>Stop</strong> untuk berhenti.</li>
+      <li>Ada yang toxic atau spam? Tekan <strong>Laporkan</strong> — tim kami akan meninjau.</li>
+    </ol>
+    <button class="btn btn-primary btn-block" id="close-how-to">Mengerti</button>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

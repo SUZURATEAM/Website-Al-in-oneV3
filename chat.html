@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Chat — RiyoChat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="toast-stack" id="toast-stack"></div>
+
+<div class="chat-page">
+
+  <header class="chat-header">
+    <div class="chat-partner-info">
+      <div class="partner-avatar" id="partner-avatar">
+        <span class="status-dot"></span>
+        <span id="partner-initial">?</span>
+      </div>
+      <div>
+        <div class="partner-name" id="partner-name">Mencari partner…</div>
+        <div class="partner-status" id="partner-status">—</div>
+      </div>
+    </div>
+    <div class="chat-actions">
+      <button class="btn btn-ghost btn-sm" id="report-btn" title="Laporkan pengguna">🚩 Laporkan</button>
+      <button class="btn btn-sm" id="skip-btn">⏭️ Skip</button>
+      <button class="btn btn-danger btn-sm" id="stop-btn">⏹️ Stop</button>
+    </div>
+  </header>
+
+  <!-- Ditampilkan sebelum ketemu partner -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="radar" aria-hidden="true">
+      <div class="radar-ring"></div>
+      <div class="radar-ring"></div>
+      <div class="radar-ring"></div>
+      <div class="radar-core">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"></path>
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
+        </svg>
+      </div>
+    </div>
+    <p id="search-status-text">🔍 Sedang mencari teman...</p>
+    <button class="btn btn-danger btn-sm" id="cancel-search-btn">Batalkan Pencarian</button>
+  </div>
+
+  <!-- Chat aktif -->
+  <div class="chat-body" id="chat-body" style="display:none;"></div>
+
+  <div class="chat-input-bar" id="chat-input-bar" style="display:none; position: relative;">
+    <div class="emoji-picker" id="emoji-picker"></div>
+    <div class="chat-input-inner">
+      <button class="icon-btn" id="emoji-btn" title="Emoji">😊</button>
+      <textarea id="message-input" placeholder="Tulis pesan… (Enter kirim, Shift+Enter baris baru)" rows="1" maxlength="1000"></textarea>
+      <button class="send-btn" id="send-btn" title="Kirim" disabled>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal: Laporkan -->
+<div class="modal-overlay" id="report-modal">
+  <div class="modal">
+    <h2>Laporkan pengguna ini</h2>
+    <div class="report-reasons" id="report-reasons">
+      <label class="report-reason"><input type="radio" name="reason" value="spam" /> Spam</label>
+      <label class="report-reason"><input type="radio" name="reason" value="toxic" /> Toxic / kasar</label>
+      <label class="report-reason"><input type="radio" name="reason" value="inappropriate" /> Konten tidak pantas</label>
+      <label class="report-reason"><input type="radio" name="reason" value="other" /> Lainnya</label>
+    </div>
+    <textarea id="report-note" placeholder="Catatan tambahan (opsional)…" maxlength="500"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="cancel-report-btn">Batal</button>
+      <button class="btn btn-danger" id="submit-report-btn">Kirim Laporan</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>
